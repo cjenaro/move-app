@@ -15,6 +15,7 @@ export default function Layout({ children }: LayoutProps) {
           :root {
             --main-color: #676767;
             --secondary-color: green;
+            --header-height: 150px;
           }
 
           *,
@@ -29,11 +30,16 @@ export default function Layout({ children }: LayoutProps) {
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
           }
-
-          .App {
+          
+          #root {
             display: grid;
             grid-template-rows: auto 1fr;
             min-height: 100vh;
+          }
+
+          main {
+            padding: 0 17.5px;
+            background-color: var(--main-color);
           }
         `}
       />
