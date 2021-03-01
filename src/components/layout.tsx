@@ -5,7 +5,7 @@ import Header from "./header";
 
 type LayoutProps = {
   children: JSX.Element;
-  logOut: () => void;
+  logOut: (() => void) | undefined;
 };
 
 export default function Layout({ children, logOut }: LayoutProps) {

@@ -4,7 +4,7 @@ import logo from "../assets/logo.png";
 import { Link } from "@reach/router";
 
 interface Props {
-  logOut: () => void;
+  logOut: (() => void) | undefined;
 }
 
 export default function Header({ logOut }: Props) {
@@ -13,7 +13,15 @@ export default function Header({ logOut }: Props) {
       <Link to="/">
         <img src={logo} alt="Move Logo." />
       </Link>
-      <BUTTON onClick={logOut}>Cerrar Sesión</BUTTON>
+      <BUTTON
+        onClick={() => {
+          if (logOut) {
+            logOut();
+          }
+        }}
+      >
+        Cerrar Sesión
+      </BUTTON>
     </HEADER>
   );
 }
