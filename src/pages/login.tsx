@@ -5,24 +5,16 @@ import Button from "../components/button";
 import Input from "../components/input";
 import Wrapper from "../components/wrapper";
 import useLogin from "../hooks/use-login";
-import { RawUser, User } from "../types/user";
-
-function parseUser(raw: RawUser): User {
-  return {
-    name: raw.data.name,
-    routines: raw.data.routines,
-    dni: raw.data.dni,
-    id: raw.ref["@ref"].id,
-    valid: raw.data.valid,
-  };
-}
+import { parseUser } from "../hooks/use-auth";
+import Spinner from "../components/spinner";
 
 interface LogInProps {
   setLoggedIn: (loggedIn: any) => void;
+  loading?: boolean;
 }
 
 export default function LogIn(props: LogInProps) {
-  const { mutateAsync, error } = useLogin();
+  const { mutateAsync, error, isLoading } = useLogin();
 
   async function handleLogin(event: React.SyntheticEvent) {
     event.preventDefault();
@@ -40,16 +32,27 @@ export default function LogIn(props: LogInProps) {
   return (
     <Wrapper>
       <FORM onSubmit={handleLogin}>
-        <H1>Iniciar Sesion</H1>
-        <Input label="DNI" htmlFor="dni">
-          <input placeholder="123123123" type="number" name="dni" />
-        </Input>
-        <Button type="submit">Enviar</Button>
-        {error ? <Error>{JSON.stringify(error)}</Error> : null}
+        {isLoading || props.loading ? (
+          <SPINNER />
+        ) : (
+          <>
+            <H1>Iniciar Sesion</H1>
+            <Input label="DNI" htmlFor="dni">
+              <input placeholder="123123123" type="number" name="dni" />
+            </Input>
+            <Button type="submit">Enviar</Button>
+            {error ? <Error>{JSON.stringify(error)}</Error> : null}
+          </>
+        )}
       </FORM>
     </Wrapper>
   );
 }
+
+const SPINNER = styled(Spinner)`
+  margin: 40px auto;
+  display: block;
+`;
 
 const Error = styled("p")`
   margin: 1em 0;
@@ -66,6 +69,7 @@ const FORM = styled("form")`
   border-radius: 4px;
   width: max-content;
   margin: 0 auto;
+  width: 100%;
 `;
 
 const H1 = styled("h1")`

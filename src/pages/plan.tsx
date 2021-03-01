@@ -4,6 +4,7 @@ import { styled } from "@filbert-js/core";
 import Button from "../components/button";
 import Wrapper from "../components/wrapper";
 import useRoutine from "../hooks/use-routine";
+import Spinner from "../components/spinner";
 
 export default function Plan(props: RouteComponentProps) {
   const { data: routine, isLoading } = useRoutine();
@@ -11,6 +12,7 @@ export default function Plan(props: RouteComponentProps) {
   return (
     <WRAPPER>
       <PLAN>
+        {isLoading ? <SPINNER /> : null}
         {routine?.blocks.map((block) => (
           <FIELDSET key={block.name}>
             <legend>{block.name}</legend>
@@ -29,6 +31,11 @@ export default function Plan(props: RouteComponentProps) {
     </WRAPPER>
   );
 }
+
+const SPINNER = styled(Spinner)`
+  margin: 40px auto;
+  display: block;
+`;
 
 const WRAPPER = styled(Wrapper)`
   padding-bottom: 30px;
