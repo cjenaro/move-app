@@ -5,9 +5,10 @@ import Header from "./header";
 
 type LayoutProps = {
   children: JSX.Element;
+  logOut: () => void;
 };
 
-export default function Layout({ children }: LayoutProps) {
+export default function Layout({ children, logOut }: LayoutProps) {
   return (
     <>
       <Global
@@ -44,7 +45,7 @@ export default function Layout({ children }: LayoutProps) {
           }
         `}
       />
-      <Header />
+      <Header logOut={logOut} />
       <main>{children}</main>
     </>
   );

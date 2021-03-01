@@ -6,10 +6,10 @@ import LogInPage from "./pages/login";
 import useAuth from "./hooks/use-auth";
 
 function App() {
-  const { user, setUser, loading } = useAuth();
+  const { user, setUser, loading, logOut } = useAuth();
 
   return (
-    <Layout>
+    <Layout logOut={logOut}>
       {user ? <Pages /> : <LogInPage setLoggedIn={setUser} loading={loading} />}
     </Layout>
   );

@@ -16,11 +16,11 @@ export default function Plan(props: RouteComponentProps) {
         {routine?.blocks.map((block) => (
           <FIELDSET key={block.name}>
             <legend>{block.name}</legend>
-            {block.exercises.map((exercise) => (
+            {block.exercises.map((exercise, idx) => (
               <LINK
                 to={`/exercise/${exercise.exercise.id}`}
                 state={{ exercise }}
-                key={exercise.exercise.id}
+                key={exercise.exercise.id + idx}
               >
                 <Button type="button">{exercise.exercise.name}</Button>
               </LINK>

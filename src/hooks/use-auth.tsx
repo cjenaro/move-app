@@ -10,6 +10,7 @@ interface AuthContext {
   user?: User;
   setUser: (user: User) => void;
   loading?: boolean;
+  logOut?: () => void;
 }
 
 const AuthContext = React.createContext<AuthContext | undefined>(undefined);
@@ -50,6 +51,21 @@ export function AuthProvider({ children }: Props) {
     setLoading(false);
   }
 
+  function logOut() {
+    const decodedCookie = decodeURIComponent(document.cookie);
+    const loggedCookie = decodedCookie
+      .split(";")
+      .find((cookie) => cookie.includes("movelogged"));
+
+    if (!loggedCookie) return;
+
+    const parts = loggedCookie.split("=");
+    const cookieName = parts[0];
+    document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+
+    set(undefined);
+  }
+
   React.useLayoutEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -67,7 +83,7 @@ export function AuthProvider({ children }: Props) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, loading }}>
+    <AuthContext.Provider value={{ user, setUser, loading, logOut }}>
       {children}
     </AuthContext.Provider>
   );
