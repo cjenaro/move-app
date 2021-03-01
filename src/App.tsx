@@ -4,17 +4,16 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import Layout from "./components/layout";
 import Pages from "./pages/router";
 import LogInPage from "./pages/login";
+import useAuth from "./hooks/use-auth";
 
 const queryClient = new QueryClient();
 
 function App() {
-  const [loggedIn, setLoggedIn] = React.useState(false);
+  const { user, setUser } = useAuth();
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Layout>
-        {loggedIn ? <Pages /> : <LogInPage setLoggedIn={setLoggedIn} />}
-      </Layout>
+      <Layout>{user ? <Pages /> : <LogInPage setLoggedIn={setUser} />}</Layout>
     </QueryClientProvider>
   );
 }

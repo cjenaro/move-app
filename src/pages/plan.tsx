@@ -3,30 +3,24 @@ import { Link, RouteComponentProps } from "@reach/router";
 import { styled } from "@filbert-js/core";
 import Button from "../components/button";
 import Wrapper from "../components/wrapper";
+import useRoutine from "../hooks/use-routine";
 
 export default function Plan(props: RouteComponentProps) {
-  const blocks = Array.from({ length: 6 }).map(
-    (ignore: unknown, idx: number) => {
-      return {
-        name: `Block ${idx}`,
-        exercises: [
-          { name: "Press", reps: "3", series: "3", id: `${idx}` },
-          { name: "Otro", reps: "3", series: "3", id: `${idx + 1}` },
-          { name: "Otro 2", reps: "3", series: "3", id: `${idx + 2}` },
-        ],
-      };
-    }
-  );
+  const { data: routine, isLoading } = useRoutine();
 
   return (
     <WRAPPER>
       <PLAN>
-        {blocks.map((block) => (
+        {routine?.blocks.map((block) => (
           <FIELDSET key={block.name}>
             <legend>{block.name}</legend>
             {block.exercises.map((exercise) => (
-              <LINK to={`/exercise/${exercise.id}`} key={exercise.id}>
-                <Button type="button">{exercise.name}</Button>
+              <LINK
+                to={`/exercise/${exercise.exercise.id}`}
+                state={{ exercise }}
+                key={exercise.exercise.id}
+              >
+                <Button type="button">{exercise.exercise.name}</Button>
               </LINK>
             ))}
           </FIELDSET>
@@ -38,7 +32,7 @@ export default function Plan(props: RouteComponentProps) {
 
 const WRAPPER = styled(Wrapper)`
   padding-bottom: 30px;
-`
+`;
 
 const PLAN = styled("div")`
   background-color: #ffffff;

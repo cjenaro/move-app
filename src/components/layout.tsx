@@ -16,6 +16,7 @@ export default function Layout({ children }: LayoutProps) {
             --main-color: #676767;
             --secondary-color: green;
             --header-height: 150px;
+            --error: #cc2233;
           }
 
           *,

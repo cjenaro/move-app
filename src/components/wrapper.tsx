@@ -5,6 +5,8 @@ const Wrapper = styled("div")`
   display: flex;
   align-items: center;
   padding-bottom: var(--header-height);
+  max-width: 600px;
+  margin: 0 auto;
 `;
 
 export default Wrapper;

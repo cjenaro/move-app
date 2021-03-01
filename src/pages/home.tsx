@@ -2,20 +2,26 @@ import * as React from "react";
 import { Link, RouteComponentProps } from "@reach/router";
 import { styled } from "@filbert-js/core";
 import Button from "../components/button";
-import useClient from "../hooks/use-client";
 import Wrapper from "../components/wrapper";
+import useAuth from "../hooks/use-auth";
 
 export default function Home(props: RouteComponentProps) {
-  const client = useClient("123");
+  const { user } = useAuth();
+  const active = new Date(user?.valid || "").getTime() > new Date().getTime();
+
   return (
     <Wrapper>
       <HOME>
-        <GREETING>Buen día, {client.name}</GREETING>
-        <SUBSCRIPTION>suscripción</SUBSCRIPTION>
-        <STATUS>ACTIVA</STATUS>
-        <LINK to="plan">
-          <Button type="button">Ver mi Plan</Button>
-        </LINK>
+        {!user ? null : (
+          <>
+            <GREETING>Buen día, {user.name}</GREETING>
+            <SUBSCRIPTION>suscripción</SUBSCRIPTION>
+            <STATUS active={active}>{active ? "" : "In"}activa</STATUS>
+            <LINK to="plan">
+              <Button type="button">Ver mi Plan</Button>
+            </LINK>
+          </>
+        )}
       </HOME>
     </Wrapper>
   );
@@ -43,12 +49,13 @@ const SUBSCRIPTION = styled("p")`
   margin-bottom: 10px;
 `;
 
-const STATUS = styled("p")`
+const STATUS = styled("p")<{ active: boolean }>`
   font-size: 50px;
   line-height: 57px;
   letter-spacing: 0.03em;
   text-transform: uppercase;
-  color: var(--main-color);
+  color: ${(props: { active: boolean }) =>
+    props.active ? "var(--main-color)" : "var(--error)"};
   margin-top: 0;
   margin-bottom: 40px;
 `;

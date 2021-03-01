@@ -12,6 +12,7 @@ interface ButtonProps {
   type: ButtonType;
   children: React.ReactNode;
   variant?: ButtonVariant;
+  className?: string;
 }
 
 function getVariationStyles(variant?: ButtonVariant) {
@@ -38,6 +39,7 @@ export default function Button(props: ButtonProps) {
       type={props.type}
       onClick={props.onClick || toVoid}
       variant={props.variant}
+      className={props.className}
     >
       {props.children}
     </BUTTON>
