@@ -13,20 +13,24 @@ export default function Plan(props: RouteComponentProps) {
     <WRAPPER>
       <PLAN>
         {isLoading ? <SPINNER /> : null}
-        {routine?.blocks.map((block) => (
-          <FIELDSET key={block.name}>
-            <legend>{block.name}</legend>
-            {block.exercises.map((exercise, idx) => (
-              <LINK
-                to={`/exercise/${exercise.exercise.id}`}
-                state={{ exercise }}
-                key={exercise.exercise.id + idx}
-              >
-                <Button type="button">{exercise.exercise.name}</Button>
-              </LINK>
-            ))}
-          </FIELDSET>
-        ))}
+        {typeof routine !== "string" ? (
+          routine?.blocks.map((block) => (
+            <FIELDSET key={block.name}>
+              <legend>{block.name}</legend>
+              {block.exercises.map((exercise, idx) => (
+                <LINK
+                  to={`/exercise/${exercise.exercise.id}`}
+                  state={{ exercise }}
+                  key={exercise.exercise.id + idx}
+                >
+                  <Button type="button">{exercise.exercise.name}</Button>
+                </LINK>
+              ))}
+            </FIELDSET>
+          ))
+        ) : (
+          <p>{routine}</p>
+        )}
       </PLAN>
     </WRAPPER>
   );

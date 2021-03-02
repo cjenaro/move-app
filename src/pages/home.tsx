@@ -17,8 +17,10 @@ export default function Home(props: RouteComponentProps) {
             <GREETING>Buen día, {user.name}</GREETING>
             <SUBSCRIPTION>suscripción</SUBSCRIPTION>
             <STATUS active={active}>{active ? "" : "In"}activa</STATUS>
-            <LINK to="plan">
-              <Button type="button">Ver mi Plan</Button>
+            <LINK to={active ? "plan" : "#"}>
+              <Button type="button" disabled={!active}>
+                Ver mi Plan
+              </Button>
             </LINK>
           </>
         )}

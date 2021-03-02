@@ -13,6 +13,7 @@ interface ButtonProps {
   children: React.ReactNode;
   variant?: ButtonVariant;
   className?: string;
+  disabled?: boolean;
 }
 
 function getVariationStyles(variant?: ButtonVariant) {
@@ -40,6 +41,7 @@ export default function Button(props: ButtonProps) {
       onClick={props.onClick || toVoid}
       variant={props.variant}
       className={props.className}
+      disabled={props?.disabled}
     >
       {props.children}
     </BUTTON>
@@ -59,6 +61,11 @@ const BUTTON = styled("button")<ButtonProps>`
   text-transform: uppercase;
   border-width: 2px;
   border-style: solid;
+
+  &[disabled] {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
 
   ${(props: ButtonProps) => getVariationStyles(props.variant)}
 `;

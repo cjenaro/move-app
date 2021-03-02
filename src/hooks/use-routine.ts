@@ -57,11 +57,13 @@ export default function useRoutine() {
   const { user } = useAuth();
 
   return useQuery("routine", async () =>
-    fetch(`/.netlify/functions/routine?id=${user?.routines[today]}`)
-      .then((blob) => blob.json())
-      .then(parseToHydratedRoutine)
-      .catch((err) => {
-        throw new Error(err);
-      })
+    user?.routines[today]
+      ? fetch(`/.netlify/functions/routine?id=${user?.routines[today]}`)
+          .then((blob) => blob.json())
+          .then(parseToHydratedRoutine)
+          .catch((err) => {
+            throw new Error(err);
+          })
+      : "Hoy no hay rutina, el descanso también es importante!"
   );
 }
